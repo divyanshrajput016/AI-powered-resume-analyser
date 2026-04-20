@@ -26,10 +26,10 @@ async function registerUser(req,res) {
 
     const hash = await bcrypt.hash(password,10);
 
-    const user = new userModel({
+    const user = await userModel.create({
         username,
         email,
-        password: hash
+        password : hash
     })
 
     const token = jwt.sign({id : user._id , username : user.username},process.env.JWT_SECRET,{
