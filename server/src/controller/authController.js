@@ -33,8 +33,9 @@ async function registerUser(req,res) {
         password : hash
     })
 
-    const token = jwt.sign({id : user._id , username : user.username},process.env.JWT_SECRET,{
-        expiresIn : "1d"
+    const token = jwt.sign({id : user._id , username : user.username, time: new Date()},process.env.JWT_SECRET,{
+        expiresIn : "1d",
+        jwtid: require("crypto").randomUUID()
     })
 
     res.cookie("token",token);
@@ -74,8 +75,9 @@ async function loginUser(req,res) {
         })
     }
 
-    const token = jwt.sign({id : user._id , username : user.username},process.env.JWT_SECRET,{
-        expiresIn : "1d"
+    const token = jwt.sign({id : user._id , username : user.username, time: new Date()},process.env.JWT_SECRET,{
+        expiresIn : "1d",
+        jwtid: require("crypto").randomUUID()
     })
 
     res.cookie("token",token);
