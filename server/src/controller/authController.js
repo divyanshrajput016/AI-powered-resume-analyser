@@ -12,7 +12,7 @@ async function registerUser(req,res) {
         })
     }
 
-    const isUserExist = userModel.findOne({
+    const isUserExist = await userModel.findOne({
         $or : [
             {username},
             {email}

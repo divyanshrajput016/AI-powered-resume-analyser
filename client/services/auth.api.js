@@ -13,6 +13,7 @@ export async function register({username, email , password}) {
 
     } catch (error) {
         console.log("error:", error)
+        throw error
     }
 }
 
@@ -28,6 +29,7 @@ export async function login({identifier , password}) {
     
     } catch (error) {
         console.log("error:", error)
+        throw error
     }
 }
 

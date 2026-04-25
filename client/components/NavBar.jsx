@@ -13,7 +13,7 @@ const NavBar = () => {
       </div>
       <div className='flex gap-10 font-medium text-gray-300'>
         <Link href="/analyze" className="hover:text-white transition-colors bg-linear-to-r from-red-500 to-pink-500 text-white rounded-4xl px-4">Analyze</Link>
-        <Link href="/" className="hover:text-white transition-colors">home</Link>
+        <Link href="/" className="hover:text-white transition-colors">Home</Link>
         <Link href="/about" className="hover:text-white transition-colors">About</Link>
         <Link href="/login" className="hover:text-white transition-colors">Login</Link>
         <Link href="/signup" className="hover:text-white transition-colors">Signup</Link>
