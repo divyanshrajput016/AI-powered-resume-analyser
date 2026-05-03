@@ -7,7 +7,7 @@ const pdfParse = require("pdf-parse");
 
 async function generteReport(req,res) {
     try {
-        console.log(pdfParse);
+
         const { selfDescriptionData, jobDescriptionData } = req.body;
 
         const file = req.file;

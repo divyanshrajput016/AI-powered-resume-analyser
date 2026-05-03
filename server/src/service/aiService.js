@@ -17,9 +17,9 @@ const geminiResponseSchema = {
         properties: {
           question: { type: "string" },
           intention: { type: "string" },
-          answer: { type: "string" }
+          expectedAnswer: { type: "string" }
         },
-        required: ["question", "intention", "answer"]
+        required: ["question", "intention", "expectedAnswer"]
       }
     },
 
@@ -30,9 +30,9 @@ const geminiResponseSchema = {
         properties: {
           question: { type: "string" },
           intention: { type: "string" },
-          answer: { type: "string" }
+          expectedAnswer: { type: "string" }
         },
-        required: ["question", "intention", "answer"]
+        required: ["question", "intention", "expectedAnswer"]
       }
     },
 
@@ -57,13 +57,13 @@ const geminiResponseSchema = {
         type: "object",
         properties: {
           day: { type: "number" },
-          focus: { type: "string" },
+          focusArea: { type: "string" },
           tasks: {
             type: "array",
             items: { type: "string" }
           }
         },
-        required: ["day", "focus", "tasks"]
+        required: ["day", "focusArea", "tasks"]
       }
     }
   },
@@ -98,6 +98,10 @@ make sure the response is in json format and follow the schema strictly.
     })
 
     console.log(JSON.stringify(JSON.parse(response.text), null, 2));
+
+    const parsed = JSON.parse(response.text);
+
+    return parsed; 
 
 }
 
