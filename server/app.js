@@ -3,10 +3,8 @@ const express = require("express")
 const cookieParser = require("cookie-parser")
 const connectDB = require("./src/config/db")
 const authRoutes = require("./src/routes/authRoutes")
+const interviewRoutes = require("./src/routes/interviewRoutes")
 const cors = require("cors")
-
-const { selfDescriptionData, jobDescriptionData, resumeDescriptionData } = require("./src/service/temp");
-const generateInterviewReport = require("./src/service/aiService")
 
 const app = express();
 
@@ -21,9 +19,8 @@ app.use(cookieParser())
 
 connectDB();
 
-generateInterviewReport({selfDescriptionData, jobDescriptionData, resumeDescriptionData});
-
 app.use("/api/auth",authRoutes)
+app.use("/api/ai",interviewRoutes )
 
 
 module.exports = app
