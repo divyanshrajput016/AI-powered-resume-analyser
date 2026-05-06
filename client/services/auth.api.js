@@ -58,18 +58,3 @@ export async function getme() {
         console.log("error:", error);
     }
 }
-
-export async function analyzeResume({resumeDescriptionData , selfDescriptionData , jobDescriptionData}) {
-    try {
-        const response = await axios.post("http://localhost:3000/api/ai/analyze" , {
-            resumeDescriptionData , selfDescriptionData , jobDescriptionData
-        }, {
-            withCredentials : true
-        });
-
-        return response.data
-        
-    } catch (error) {
-        console.log("error:", error);
-    }   
-}

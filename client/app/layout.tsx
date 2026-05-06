@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { AuthProvider } from "@/context/auth.context";
+import { InterviewProvider } from "@/context/interview.context"
 import "./globals.css";
 
 const outfit = Outfit({
@@ -26,7 +27,9 @@ export default function RootLayout({
       
       <body className="min-h-full flex flex-col bg-black text-white">
         <AuthProvider>
-        {children}
+          <InterviewProvider>
+            {children}
+          </InterviewProvider>
         </AuthProvider>
       </body>
     </html>

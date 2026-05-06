@@ -3,11 +3,13 @@ import React from "react";
 import NavBar from "@/components/NavBar.jsx";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
+import { useInterview } from "../../../hooks/useInterview";
 import { useState } from "react";
 
 const page = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const { handleAnalyzeResume } = useInterview();
 
   const [jobDescriptionData, setJobDescriptionData] = useState("");
   const [selfDescriptionData, setSelfDescriptionData] = useState("");
@@ -20,7 +22,7 @@ const page = () => {
         <div className="text-center">
           <p className="mb-4 text-lg">Please log in to access this page.</p>
           <button
-            className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg px-6 py-3 text-white hover:from-purple-600 hover:to-pink-600 transition duration-300"
+            className="bg-linear-to-r from-purple-500 to-pink-500 rounded-lg px-6 py-3 text-white hover:from-purple-600 hover:to-pink-600 transition duration-300"
             onClick={() => router.push("/login")}
           >
             Go to Login
@@ -32,8 +34,8 @@ const page = () => {
 
   function analyzeResume(e) {
     e.preventDefault();
-    // Handle resume analysis
-  }
+    handleAnalyzeResume({resumeFile , selfDescriptionData , jobDescriptionData});
+    }
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -125,31 +127,33 @@ e.g., 'Senior Frontend Engineer at Google requires proficiency in React, TypeScr
                 </div>
               </div>
 
-              <div
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                className={`flex-1 flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 transition-all cursor-pointer ${
-                  isDragOver
-                    ? "border-purple-500 bg-purple-500/10"
-                    : "border-gray-700 hover:border-gray-600"
-                }`}
-              >
-                <div className="text-center">
-                  <div className="text-4xl mb-3">💼</div>
-                  <p className="text-gray-300 font-semibold mb-2">
-                    Click to upload or drag & drop
-                  </p>
-                  <p className="text-sm text-gray-500">PDF or DOCX (Max 5MB)</p>
+              <div className="relative">
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`flex-1 flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 transition-all cursor-pointer ${
+                    isDragOver
+                      ? "border-purple-500 bg-purple-500/10"
+                      : "border-gray-700 hover:border-gray-600"
+                  }`}
+                >
+                  <div className="text-center">
+                    <div className="text-4xl mb-3">💼</div>
+                    <p className="text-gray-300 font-semibold mb-2">
+                      Click to upload or drag & drop
+                    </p>
+                    <p className="text-sm text-gray-500">PDF or DOCX (Max 5MB)</p>
+                  </div>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="resume-upload"
+                  />
+                  <label htmlFor="resume-upload" className="absolute inset-0 cursor-pointer rounded-lg" />
                 </div>
-                <input
-                  type="file"
-                  accept=".pdf,.docx"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  id="resume-upload"
-                />
-                <label htmlFor="resume-upload" className="absolute inset-0 cursor-pointer" />
               </div>
 
               {resumeFile && (
@@ -162,7 +166,7 @@ e.g., 'Senior Frontend Engineer at Google requires proficiency in React, TypeScr
 
               <div className="mt-6">
                 <p className="text-sm text-gray-400 mb-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <span className="text-blue-400 font-semibold">ℹ️ Note:</span> Either a Resume or a Self-Description is required to generate a personalized plan.
+                  <span className="text-blue-400 font-semibold"> Note:</span> Either a Resume or a Self-Description is required to generate a personalized plan.
                 </p>
               </div>
 
