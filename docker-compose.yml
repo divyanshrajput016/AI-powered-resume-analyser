@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    container_name: next-app
+    image: next-app
+    ports:
+      - "5000:3000"
+
+  server:
+    build: ./server
+    container_name: express-app
+    image: express-app
+    ports:
+      - "3000:3000"
