@@ -42,4 +42,28 @@ async function generteReport(req,res) {
 
 }
 
-module.exports = { generteReport }
+async function getAllReports(req,res) {
+    try {
+        const reports = await reportModel.find({ user: req.user.id }).sort({ createdAt: -1 });
+        res.status(200).json({ reports });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching reports" });
+    }
+}
+
+async function getReportById(req,res) {
+    try {
+        const reportId = req.params.id;
+        const report = await reportModel.findOne({ _id: reportId, user: req.user.id });
+        if (!report) {
+            return res.status(404).json({ message: "Report not found" });
+        }
+        res.status(200).json({ report });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching report" });
+    }
+}
+
+module.exports = { generteReport, getAllReports, getReportById }

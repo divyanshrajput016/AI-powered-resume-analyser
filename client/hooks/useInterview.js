@@ -7,7 +7,7 @@ export const useInterview = () => {
     const context = useContext(interviewContext);
     const {loading , setLoading , report , setReport} = context;
     
-    const handleAnalyzeResume = async(resume) => {
+    const handleAnalyzeResume = async({resumeFile , selfDescriptionData , jobDescriptionData}) => {
         try {
             setLoading(true);
             const data = await analyzeResume({resumeFile , selfDescriptionData , jobDescriptionData});

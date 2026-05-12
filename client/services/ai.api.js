@@ -8,8 +8,8 @@ export async function analyzeResume({resumeFile, selfDescriptionData , jobDescri
         formData.append("selfDescriptionData", selfDescriptionData);
         formData.append("jobDescriptionData", jobDescriptionData);
 
-        formData.append("resume",file);
-
+        formData.append("resume",resumeFile);
+        
         const response = axios.post("http://localhost:3000/api/ai/analyze",
             formData,
             {

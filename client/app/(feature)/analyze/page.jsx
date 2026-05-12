@@ -4,17 +4,27 @@ import NavBar from "@/components/NavBar.jsx";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
 import { useInterview } from "../../../hooks/useInterview";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const page = () => {
   const { user } = useAuth();
   const router = useRouter();
-  const { handleAnalyzeResume } = useInterview();
+
+  const { handleAnalyzeResume, loading } = useInterview();
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const [jobDescriptionData, setJobDescriptionData] = useState("");
   const [selfDescriptionData, setSelfDescriptionData] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
+  
   const [isDragOver, setIsDragOver] = useState(false);
+
+  // Navigate to reports when analysis is complete
+  useEffect(() => {
+    if (hasSubmitted && !loading) {
+      router.push("/reports");
+    }
+  }, [loading, hasSubmitted, router]);
 
   if (!user) {
     return (
@@ -34,8 +44,9 @@ const page = () => {
 
   function analyzeResume(e) {
     e.preventDefault();
+    setHasSubmitted(true);
     handleAnalyzeResume({resumeFile , selfDescriptionData , jobDescriptionData});
-    }
+  }
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -64,6 +75,24 @@ const page = () => {
   return (
     <div className="bg-black min-h-screen text-white">
       <NavBar />
+      
+      {/* Loading Modal */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+            <div className="flex justify-center mb-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-r-2 border-pink-500"></div>
+            </div>
+            <h2 className="text-2xl font-bold mb-2 bg-linear-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Generating Your Interview Strategy...
+            </h2>
+            <p className="text-gray-400">
+              Our AI is analyzing your resume and the job description. This may take a moment.
+            </p>
+          </div>
+        </div>
+      )}
+      
       <div className="flex flex-col items-center px-6 py-16">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight mb-3">
@@ -172,9 +201,14 @@ e.g., 'Senior Frontend Engineer at Google requires proficiency in React, TypeScr
 
               <button
                 type="submit"
-                className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 rounded-2xl transition duration-300 transform hover:scale-105 mt-auto"
+                disabled={loading}
+                className={`w-full bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-2xl transition duration-300 transform mt-auto ${
+                  loading 
+                    ? 'opacity-50 cursor-not-allowed' 
+                    : 'hover:from-purple-600 hover:to-pink-600 hover:scale-105'
+                }`}
               >
-                ⭐ Generate My Interview Strategy
+                {loading ? "Generating..." : "⭐ Generate My Interview Strategy"}
               </button>
             </div>
           </div>
