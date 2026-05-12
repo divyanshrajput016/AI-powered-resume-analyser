@@ -7,6 +7,7 @@ const ai = new GoogleGenAI({
 const geminiResponseSchema = {
   type: "object",
   properties: {
+    role: { type: "string", description: "The target job role extracted from the job description, e.g., 'Full Stack Developer'" },
     matchScore: { type: "number" },
 
     technicalQuestions: {
@@ -67,6 +68,7 @@ const geminiResponseSchema = {
     }
   },
   required: [
+    "role",
     "matchScore",
     "technicalQuestions",
     "behavioralQuestions",

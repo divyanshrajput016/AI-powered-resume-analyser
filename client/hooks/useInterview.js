@@ -5,13 +5,14 @@ import { analyzeResume } from "../services/ai.api";
 
 export const useInterview = () => {
     const context = useContext(interviewContext);
-    const {loading , setLoading , report , setReport} = context;
+    const {loading , setLoading , report , setReport, triggerRefetch, reports} = context;
     
     const handleAnalyzeResume = async({resumeFile , selfDescriptionData , jobDescriptionData}) => {
         try {
             setLoading(true);
             const data = await analyzeResume({resumeFile , selfDescriptionData , jobDescriptionData});
             setReport(data);
+            triggerRefetch();
         } catch (error) {
             console.log("Error analyzing resume:", error);
         } finally {            
@@ -19,5 +20,5 @@ export const useInterview = () => {
         }
     }
 
-    return { loading, report, handleAnalyzeResume };
+    return { loading, report, handleAnalyzeResume, reports };
 }

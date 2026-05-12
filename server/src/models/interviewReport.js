@@ -82,6 +82,11 @@ const interviewReportSchema = new mongoose.Schema({
         required: true
     },
 
+    role: {
+        type: String,
+        required: false
+    },
+
     resume: {
         type: String,
         required: false
