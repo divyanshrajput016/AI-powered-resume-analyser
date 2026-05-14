@@ -10,7 +10,7 @@ export async function analyzeResume({resumeFile, selfDescriptionData , jobDescri
 
         formData.append("resume",resumeFile);
         
-        const response = axios.post("http://localhost:3000/api/ai/analyze",
+        const response = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/analyze`,
             formData,
             {
                 withCredentials: true

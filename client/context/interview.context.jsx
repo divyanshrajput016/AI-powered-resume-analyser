@@ -14,7 +14,7 @@ export const InterviewProvider = ({children}) => {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/ai/reports", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/reports`, {
                     method: "GET",
                     credentials: "include"
                 });

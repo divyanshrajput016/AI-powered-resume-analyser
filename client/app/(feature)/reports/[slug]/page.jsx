@@ -21,7 +21,7 @@ export default function ReportDetailPage() {
     const fetchReportDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/api/ai/report/${slug}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/report/${slug}`, {
           method: "GET",
           credentials: "include",
         });
